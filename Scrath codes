@@ -1,0 +1,37 @@
+## feel free to use the code
+## it's my first code written from scratch except for some numpy
+## in this code i cover linear-regression using gradient descent
+## the code can be modified easly by adding some feature like calculating avg cost for 100 iteration to see the progress
+## some prediction can be add
+## it also can be part of a larger model
+
+
+
+
+def Linear_regression(X,y,n,alpha,gamma):
+    m = X.shape[0]
+    b=0
+    if gamma >0:
+        thetas = np.zeros(X.shape[1]).reshape(-1,1)
+        for i in range (0,n):
+            hypo = np.dot(X,thetas)+b
+            loss =hypo - y        
+            derivative= (alpha/m)*np.dot(X.T,loss)
+            b = b - derivative
+            thetas = thetas*(1-alpha/m) - derivative        
+    else:
+        X1 = np.ones(X.shape[0]).reshape(-1,1)
+        X=np.append(X1,X,axis=1)
+        thetas = np.zeros(X.shape[1]).reshape(-1,1)
+        for i in range (0,n):
+            hypo = np.dot(X,thetas)
+            loss =hypo - y
+            derivative= (alpha/m)*np.dot(X.T,loss)
+            thetas = thetas - derivative
+    if gamma>0:
+        print('intersection point :'+ str(b),thetas)
+    else:
+        print(thetas)
+    Cost = (1/(2*m))*(np.sum(loss**2)+gamma*np.sum(thetas**2))
+    return Cost
+    
